@@ -1,6 +1,7 @@
 Backendless.initApp("1F116359-9934-2652-FF41-EC23042C0400","B59AA48F-500F-B1E8-FF7B-EACAB3399500");
 
 $(document).on("click","#uploadButton",saveMap);
+$(document).on('pageshow','#courseSelect',loadCourses);
 
 function saveMap(){
     var geo = getGeo();
@@ -8,8 +9,9 @@ function saveMap(){
 }
 
 function upload(geo){
+    console.log($('#courseNameInput'));
     var newCourse={
-        courseName: "Test",
+        courseName: "test",
         origin: geo[0].place_id,
         destination: geo[geo.length-1].place_id
     };
@@ -33,6 +35,25 @@ function saved(savedCourse){
 
 function error(err){
     alert(err);   
+}
+
+function loadCourses(){
+    Backendless.Data.of("courses").find().then(processResults).catch(error);
+    
+}
+
+function processResults(courses){
+    //display the first task in an array of tasks/
+    $('#courseList').empty();
+    //Add checked course
+    $('#courseList').append("<legend>Your Race Courses:</legend>");
+    $('#courseList').append("<input type='radio' checked name='c' id='p0' value="+courses[0].objectId   +"><label for='p0'>"+courses[0].courseName+"</label>");
+    //add each new tasks
+    for(var i=1; i<courses.length;i++){
+        $('#courseList').append("<input type='radio' name='c' id='p"+i+"' value="+courses[i].objectId   +"><label for='p"+i+"'>"+courses[i].courseName+"</label>");
+    }
+    //refresh the listview
+    $('#courseList').trigger("create");
 }
 
 

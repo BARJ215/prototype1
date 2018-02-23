@@ -35,7 +35,7 @@ function initCalc(pos){
     directionsService = new google.maps.DirectionsService;
     
     route ={
-          origin: {lat: pos.lat,lng: pos.lng-0.003},  // Haight.
+          origin: {lat: pos.lat,lng: pos.lng},  // Haight.
           destination: {lat: pos.lat,lng: pos.lng+0.003},  // Ocean Beach.
           // Note that Javascript allows us to access the constant
           // using square brackets and a string value as its

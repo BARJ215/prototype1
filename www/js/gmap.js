@@ -13,9 +13,9 @@ function initMap(){
 }
 
 function initMap(pos){
-    detectBrowser();
+    detectBrowser("map");
 
-     map = new google.maps.Map(document.getElementById('map'), {
+     map = new google.maps.Map(document.getElementById("map"), {
         center: pos,
         zoom: 15
     });
@@ -23,9 +23,9 @@ function initMap(pos){
     return map;
 }
 
-function detectBrowser() {
+function detectBrowser(id) {
     var useragent = navigator.userAgent;
-    var mapdiv = document.getElementById("map");
+    var mapdiv = document.getElementById(id);
     mapdiv.style.width = '100%';
     mapdiv.style.height = '800px';
 }
@@ -34,7 +34,8 @@ function addMarker(location){
     //Create a new marker
     var marker = new google.maps.Marker({
         position: location,
-        map: map,    
+        label: "YOU ARE HERE",
+        map: map    
     });
     //Add marker to array
     markers.push(marker);
