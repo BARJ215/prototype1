@@ -1,6 +1,10 @@
 Backendless.initApp("1F116359-9934-2652-FF41-EC23042C0400","B59AA48F-500F-B1E8-FF7B-EACAB3399500");
 
+var raceDisplay;
+var raceDirectionService;
+
 $(document).on("click","#uploadButton",saveMap);
+$(document).on("click","#selectButton",selectCourse);
 $(document).on('pageshow','#courseSelect',loadCourses);
 
 function saveMap(){
@@ -38,8 +42,7 @@ function error(err){
 }
 
 function loadCourses(){
-    Backendless.Data.of("courses").find().then(processResults).catch(error);
-    
+    Backendless.Data.of("courses").find().then(processResults).catch(error);   
 }
 
 function processResults(courses){
@@ -56,7 +59,27 @@ function processResults(courses){
     $('#courseList').trigger("create");
 }
 
+function selectCourse(){
+    //Get ID
+    var id="A4531C20-15FD-C088-FF44-32A64503D900";
+    Backendless.Data.of("courses").findById(id).then(loadRace).catch(error);
+}
 
+function loadRace(course){
+    var rc={
+        origin: placeMaker(course.origin),
+        destination: placeMaker(course.destination),
+        travelMode: google.maps.TravelMode['WALKING']
+    };
+    calcRoute(directionsService, raceDisplay, rc);
+}
+
+function placeMaker(id){
+    var place = {
+        placeId: id
+    };
+    return place;
+}
 /*
 function saveCourse(){
     

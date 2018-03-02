@@ -1,4 +1,5 @@
 var directionsDisplay;
+var raceDisplay;
 var directionsService;
 var route;
 //var points=[];
@@ -7,10 +8,11 @@ var route;
 //$(document).on("click","#loadButton",load);
 
 //when the jQuery Mobile page is initialised
-$(document).on('pageinit','#mapEditor', function() {
+$(document).on('pageinit', function() {
     ///instruct location service to get position with appropriate callbacks
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
+
 
 
 function init(position){
@@ -30,6 +32,11 @@ function initCalc(pos){
     directionsDisplay = new google.maps.DirectionsRenderer({
         draggable:true,
         map: map
+    });
+    
+    raceDisplay = new google.maps.DirectionsRenderer({
+        draggable:false,
+        map: raceMap
     });
     
     directionsService = new google.maps.DirectionsService;

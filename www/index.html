@@ -19,6 +19,11 @@
         <h1>worldRacer</h1>
     </div> 
     <div data-role="main">
+        <div data-role="navbar">
+            <ul>
+                <li><a href='#courseSelect'>START</a></li>
+            </ul>
+        </div>
         <div id="signIn">
         </div>
         <div id="score">
@@ -30,11 +35,7 @@
         </div>
   </div>
     <div data-role="footer" data-position="fixed" data-theme="c">
-        <div data-role="navbar">
-            <ul>
-                <li><a href='#courseSelect'>START</a></li>
-            </ul>
-        </div>
+
     </div>
 </div>
     
@@ -68,13 +69,27 @@
     </div> 
     
     <div data-role="main">
-        <button data-role="button" id="selectButton">SELECT</button>
+        <a href="#race" data-role="button" id="selectButton">SELECT</a>
     <form>
         
         <fieldset id="courseList" data-role="controlgroup">
         </fieldset>
     </form>
     
+    </div>
+    
+    
+</div>
+<div data-role="page" id="race">
+    <div data-role="header">
+        <a href='#courseSelect' id="backButton">BACK</a>
+        <h1>Race</h1>
+    </div> 
+    
+    <div data-role="main">
+        <div id="mapdiv">
+            <div id="raceMap"></div>
+        </div>
     </div>
     
     

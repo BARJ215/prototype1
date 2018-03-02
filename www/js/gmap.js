@@ -1,4 +1,5 @@
 var map;
+var raceMap;
 var markers= [];
 
 function initMap(){
@@ -13,9 +14,14 @@ function initMap(){
 }
 
 function initMap(pos){
-    detectBrowser("map");
+    detectBrowser();
 
      map = new google.maps.Map(document.getElementById("map"), {
+        center: pos,
+        zoom: 15
+    });
+    
+    raceMap = new google.maps.Map(document.getElementById("raceMap"), {
         center: pos,
         zoom: 15
     });
@@ -25,9 +31,12 @@ function initMap(pos){
 
 function detectBrowser(id) {
     var useragent = navigator.userAgent;
-    var mapdiv = document.getElementById(id);
+    var mapdiv = document.getElementById("map");
     mapdiv.style.width = '100%';
     mapdiv.style.height = '800px';
+    var racediv = document.getElementById("raceMap");
+    racediv.style.width = '100%';
+    racediv.style.height = '800px';
 }
 
 function addMarker(location){
