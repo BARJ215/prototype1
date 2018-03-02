@@ -61,7 +61,7 @@ function processResults(courses){
 
 function selectCourse(){
     //Get ID
-    var id="A4531C20-15FD-C088-FF44-32A64503D900";
+    var id = getSelection();
     Backendless.Data.of("courses").findById(id).then(loadRace).catch(error);
 }
 
@@ -80,36 +80,14 @@ function placeMaker(id){
     };
     return place;
 }
-/*
-function saveCourse(){
-    
-    var points=[];
-    var geo = directionsDisplay.directions.geocoded_waypoints;
-    //For everpoint on the map
-    for(i=0; i<geo.length;i++){
-        points[i]={placeId: geo[i].place_id};
-        //If a waypoint...
-        if(0<i&&i<geo.length-1){
-           points[i]={location: {placeId: geo[i].place_id},stopover:false}; 
+
+function getSelection(){
+    var objectId;
+    var radios = document.getElementsByName('c');
+    for(i=0;i<radios.length;i++){
+        if(radios[i].checked==true){
+            objectId= radios[i].value;
         }
     }
-    
+    return objectId;
 }
-
-
-function load(){
-    //Set inital point and destination
-    route.origin=points[0];
-    route.destination=points[points.length-1];
-    //Optional waypoints...
-    if(points.length>2){
-        if(points.length==3){
-          route.waypoints=[points[1]];  
-        }else{
-          route.waypoints=points.slice(1,points.length-1);
-        }
-    }
-    //Calculate and display using new route
-    calcRoute(directionsService, directionsDisplay, route);
-}+
-*/

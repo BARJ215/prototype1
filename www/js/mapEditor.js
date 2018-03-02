@@ -1,34 +1,31 @@
-var directionsDisplay;
-var raceDisplay;
 var directionsService;
 var route;
-//var points=[];
+var loading = true;
 
-//$(document).on("click","#saveButton",saveCourse);
-//$(document).on("click","#loadButton",load);
+
 
 //when the jQuery Mobile page is initialised
-$(document).on('pageinit', function() {
+$(document).on("pageinit","#mapEditor", function(){
     ///instruct location service to get position with appropriate callbacks
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
 
-
+$(document).on("pageshow","#mapEditor", resetEditor);
 
 function init(position){
     //Get position
     var currentPos = getPosition(position);
-    //Load map
-    initMap(currentPos);
-    
+  
     initCalc(currentPos);
-    
-    calcRoute(directionsService, directionsDisplay, route);
+        
     //Add marker on current position
     addMarker(currentPos);
+    
+    loading=false;
 }
 
 function initCalc(pos){
+    
     directionsDisplay = new google.maps.DirectionsRenderer({
         draggable:true,
         map: map
@@ -38,7 +35,7 @@ function initCalc(pos){
         draggable:false,
         map: raceMap
     });
-    
+        
     directionsService = new google.maps.DirectionsService;
     
     route ={
@@ -49,6 +46,8 @@ function initCalc(pos){
           // "property."
           travelMode: google.maps.TravelMode['WALKING']
     };
+    
+    calcRoute(directionsService, directionsDisplay, route);
     
 }
 
@@ -89,4 +88,19 @@ function calcRoute(directionsService, directionsDisplay, route) {
 function getGeo(){
     var geo = directionsDisplay.directions.geocoded_waypoints;
     return geo;
+}
+
+function resetEditor(){
+    
+    if(loading==false){
+        loading=true;
+        console.log("reload editor");
+    
+        directionsDisplay.set('directions',null);
+        raceDisplay.set('directions',null);
+    
+        deleteMarkers();
+    
+        navigator.geolocation.getCurrentPosition(init, failPosition);
+    }
 }

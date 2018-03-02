@@ -1,16 +1,25 @@
 var map;
 var raceMap;
 var markers= [];
+var directionsDisplay;
+var raceDisplay;
 
 function initMap(){
-    /*
+    
     detectBrowser();
 
-     map = new google.maps.Map(document.getElementById('map'), {
-        center:{lat: 0, lng: 0},
-        zoom: 15
+    var currentPos = getPosition(position); 
+
+     map = new google.maps.Map(document.getElementById("map"), {
+        center: currentPos,
+        zoom: 20
     });
-    */
+    
+    raceMap = new google.maps.Map(document.getElementById("raceMap"), {
+        center: currentPos,
+        zoom: 20
+    });
+    
 }
 
 function initMap(pos){
