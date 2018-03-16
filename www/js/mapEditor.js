@@ -10,8 +10,9 @@ var loading = false;
    // navigator.geolocation.getCurrentPosition(init, failPosition);
 //});
 
-$(document).on("pageshow","#mapEditor", getLocation);
 //$(document).on("pageshow","#mapEditor", resetEditor);
+$(document).on("pageshow","#mapEditor", getLocation);
+
 
 
 function getLocation() {
@@ -19,19 +20,19 @@ function getLocation() {
 }
 function init(position){
     console.log("init");
-  
-    
+
     //Get position
     var currentPos = convertPosition(position);
-  
-      initMap(currentPos);
+
+    if(loading==false){
+        initMap(currentPos);    
+        initCalc(currentPos);
+        //Add marker on current position
+        addMarker(currentPos);
+        calcRoute(directionsService, directionsDisplay, route);
+        loading=true;
+    }
     
-    initCalc(currentPos);
-        
-    //Add marker on current position
-    //addMarker(currentPos);
-    
-    loading=true;
     //resetEditor();
 }
 
@@ -60,7 +61,7 @@ function initCalc(pos){
           travelMode: google.maps.TravelMode['WALKING']
     };
     
-   //calcRoute(directionsService, directionsDisplay, route);
+
     
 }
 
@@ -104,19 +105,12 @@ function getGeo(){
 }
 
 function resetEditor(){
+    //loading=true;
+    console.log("reload editor");
     
-    if(loading==true){
-        //loading=true;
-        console.log("reload editor");
+    directionsDisplay.set('directions',null);
+    raceDisplay.set('directions',null);
     
-        directionsDisplay.set('directions',null);
-        raceDisplay.set('directions',null);
+    deleteMarkers();
     
-        deleteMarkers();
-    
-        navigator.geolocation.getCurrentPosition(init, failPosition);
-        
-        calcRoute(directionsService, directionsDisplay, route);
-        addMarker();
-    }
 }

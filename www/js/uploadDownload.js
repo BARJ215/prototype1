@@ -38,6 +38,7 @@ function saved(savedCourse){
 }
 
 function error(err){
+    loadings=false;
     alert(err);   
 }
 
