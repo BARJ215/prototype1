@@ -15,7 +15,7 @@ function saveMap(){
 function upload(geo){
     console.log($('#courseNameInput'));
     var newCourse={
-        courseName: "test",
+        courseName: $('#courseNameInput').val(),
         origin: geo[0].place_id,
         destination: geo[geo.length-1].place_id
     };
