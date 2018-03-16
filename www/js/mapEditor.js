@@ -5,7 +5,7 @@ var loading = true;
 
 
 //when the jQuery Mobile page is initialised
-$(document).on("pageinit","#mapEditor", function(){
+$(document).on("pageinit", function(){
     ///instruct location service to get position with appropriate callbacks
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
