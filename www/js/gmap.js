@@ -54,7 +54,7 @@ function addMarker(location){
     //Create a new marker
     var marker = new google.maps.Marker({
         position: location,
-        label: "YOU ARE HERE",
+        label: "YOU",
         map: map    
     });
     //Add marker to array
