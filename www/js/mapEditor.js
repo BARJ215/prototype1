@@ -1,30 +1,42 @@
 var directionsService;
 var route;
-var loading = true;
+var loading = false;
 
 
 
 //when the jQuery Mobile page is initialised
-$(document).on("pageinit", function(){
+//$(document).ready(function(){
     ///instruct location service to get position with appropriate callbacks
-    navigator.geolocation.getCurrentPosition(init, failPosition);
-});
+   // navigator.geolocation.getCurrentPosition(init, failPosition);
+//});
 
-$(document).on("pageshow","#mapEditor", resetEditor);
+$(document).on("pageshow","#mapEditor", getLocation);
+//$(document).on("pageshow","#mapEditor", resetEditor);
 
+
+function getLocation() {
+     navigator.geolocation.getCurrentPosition(init, failPosition);
+}
 function init(position){
-    //Get position
-    var currentPos = getPosition(position);
+    console.log("init");
   
+    
+    //Get position
+    var currentPos = convertPosition(position);
+  
+      initMap(currentPos);
+    
     initCalc(currentPos);
         
     //Add marker on current position
-    addMarker(currentPos);
+    //addMarker(currentPos);
     
-    loading=false;
+    loading=true;
+    //resetEditor();
 }
 
 function initCalc(pos){
+    
     
     directionsDisplay = new google.maps.DirectionsRenderer({
         draggable:true,
@@ -35,6 +47,7 @@ function initCalc(pos){
         draggable:false,
         map: raceMap
     });
+    
         
     directionsService = new google.maps.DirectionsService;
     
@@ -47,12 +60,12 @@ function initCalc(pos){
           travelMode: google.maps.TravelMode['WALKING']
     };
     
-    calcRoute(directionsService, directionsDisplay, route);
+   //calcRoute(directionsService, directionsDisplay, route);
     
 }
 
 //called when the position is successfully determined
-function getPosition(position) {
+function convertPosition(position) {
 	//lets get some stuff out of the position object
 	var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
@@ -92,8 +105,8 @@ function getGeo(){
 
 function resetEditor(){
     
-    if(loading==false){
-        loading=true;
+    if(loading==true){
+        //loading=true;
         console.log("reload editor");
     
         directionsDisplay.set('directions',null);
@@ -102,5 +115,8 @@ function resetEditor(){
         deleteMarkers();
     
         navigator.geolocation.getCurrentPosition(init, failPosition);
+        
+        calcRoute(directionsService, directionsDisplay, route);
+        addMarker();
     }
 }

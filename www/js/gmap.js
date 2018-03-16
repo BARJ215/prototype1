@@ -4,11 +4,11 @@ var markers= [];
 var directionsDisplay;
 var raceDisplay;
 
-function initMap(){
+/*function initMap(){
     
-    detectBrowser();
+    //detectBrowser();
 
-    var currentPos = getPosition(position); 
+    var currentPos = convertPosition(position); 
 
      map = new google.maps.Map(document.getElementById("map"), {
         center: currentPos,
@@ -20,12 +20,13 @@ function initMap(){
         zoom: 20
     });
     
-}
+}*/
+
 
 function initMap(pos){
-    detectBrowser();
+    //detectBrowser();
 
-     map = new google.maps.Map(document.getElementById("map"), {
+     map = new google.maps.Map(document.getElementById("mapdiv"), {
         center: pos,
         zoom: 15
     });
@@ -38,9 +39,10 @@ function initMap(pos){
     return map;
 }
 
+
 function detectBrowser(id) {
     var useragent = navigator.userAgent;
-    var mapdiv = document.getElementById("map");
+    var mapdiv = document.getElementById("mapdiv");
     mapdiv.style.width = '100%';
     mapdiv.style.height = '800px';
     var racediv = document.getElementById("raceMap");
@@ -61,6 +63,7 @@ function addMarker(location){
 }
 
 function deleteMarkers(){
+    console.log("markers cleared");
     //Remove all markers from the map
     for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
