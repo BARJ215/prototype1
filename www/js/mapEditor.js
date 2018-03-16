@@ -11,7 +11,7 @@ var loading = false;
 //});
 
 //$(document).on("pageshow","#mapEditor", resetEditor);
-$(document).on("pageshow","#mapEditor", getLocation);
+$(document).on("pageshow","#mapEditor","#race", getLocation);
 
 
 
