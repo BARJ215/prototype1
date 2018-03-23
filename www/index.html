@@ -13,35 +13,39 @@
 </head>
 
 <body>
-
-<div data-role="page" id="main">
+<div data-role="page" id="courseSelect">
     <div data-role="header">
-        <h1>RACCER</h1>
+        <button id="menuButton">MENU</button>
+        <h1>Raccer</h1>
+        <a href='#mapEditor'data-icon="plus" id="newButton">NEW</a>
     </div> 
+    
     <div data-role="main">
-
-        
-        <div id="signIn">
- 
-        </div>
-
         <div id="score">
-            <h2>YOUR SCORE: 0</h2>
+            <h3>SCORE: 1000</h3>
+            Leaderboard:
+            <ul data-role="listview" id="leaderboard">
+                <li>1. Superman -   </li>
+                <li>2. Flash</li>
+                <li>3. Billy Whiz</li>
+            </ul><br>
         </div>
-        <div id="leaderboard">
-            <h2>LEADERBOARD</h2>
-        </div>
- 
-  </div>
+    <form>
+        
+        <fieldset id="courseList" data-role="controlgroup">
+        </fieldset>
+    </form>
+    
+    </div>
     <div data-role="footer" data-position="fixed" data-theme="c">
-
         <div data-role="navbar">
             <ul>
-                <li><a href='#courseSelect'>START</a></li>
+                <li><a href="#race" data-role="button" id="selectButton">SELECT</a></li>
             </ul>
         </div>
     </div>
 </div>
+    
     
 
 <div data-role="page" id="mapEditor">
@@ -54,33 +58,22 @@
     
     <div role="main" class="ui-content" id="map-content">
         <div id="mapdiv"></div>
-        <input type="text" value="" placeholder="Name" required id="courseNameInput">
+                <div data-role="navbar">
+            <input type="text" value="" placeholder="Name" required id="courseNameInput">
+            <ul>
+                <li><a href='#courseSelect' id="uploadButton" data-icon="check"></a></li>
+            </ul>
+        </div>
+        
     </div>
 
-  
+    
+
+    
   </div>
 
     
-<div data-role="page" id="courseSelect">
-    <div data-role="header">
-        <a href='#main' id="backButton">BACK</a>
-        
-        <h1>SELECT RACE</h1>
-        <a href='#mapEditor'data-icon="plus" id="newButton">NEW</a>
-    </div> 
-    
-    <div data-role="main">
-        <a href="#race" data-role="button" id="selectButton">SELECT</a>
-    <form>
-        
-        <fieldset id="courseList" data-role="controlgroup">
-        </fieldset>
-    </form>
-    
-    </div>
-    
-    
-</div>
+
     
 <div data-role="page" id="race">
     <div data-role="header">
