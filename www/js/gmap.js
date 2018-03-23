@@ -1,38 +1,29 @@
 var map;
 var raceMap;
+var directionsService;
+var route;
+var newRoute=false;
+var loading = false;
 var markers= [];
 var directionsDisplay;
 var raceDisplay;
 
-$(document).on("pageshow","#mapEditor", getLocation);
-$(document).on("pageshow","#race", function(){
+$(document).on("pageshow","#mapEditor", function() {
+    newRoute=true;
+    navigator.geolocation.getCurrentPosition(init, failPosition);
+    
+});
+$(document).on("pageinit","#race", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
-/*function initMap(){
-    
-    //detectBrowser();
-
-    var currentPos = convertPosition(position); 
-
-     map = new google.maps.Map(document.getElementById("map"), {
-        center: currentPos,
-        zoom: 20
-    });
-    
-    raceMap = new google.maps.Map(document.getElementById("raceMap"), {
-        center: currentPos,
-        zoom: 20
-    });
-    
-}*/
-
 
 function initMap(pos){
     //detectBrowser();
 
      map = new google.maps.Map(document.getElementById("mapdiv"), {
         center: pos,
-        zoom: 15
+        zoom: 15,
+        
     });
     
     raceMap = new google.maps.Map(document.getElementById("raceMap"), {
@@ -76,25 +67,7 @@ function deleteMarkers(){
     markers=[];
 }
 
-var directionsService;
-var route;
-var loading = false;
 
-
-
-//when the jQuery Mobile page is initialised
-//$(document).ready(function(){
-    ///instruct location service to get position with appropriate callbacks
-   // navigator.geolocation.getCurrentPosition(init, failPosition);
-//});
-
-//$(document).on("pageshow","#mapEditor", resetEditor);
-
-
-function getLocation() {
-     navigator.geolocation.getCurrentPosition(init, failPosition);
-    calcRoute(directionsService, directionsDisplay, route);
-}
 function init(position){
     console.log("init");
 
@@ -109,8 +82,11 @@ function init(position){
         loading=true;
         console.log("loaded");
     }
-    
-    //resetEditor();
+    if(newRoute==true){
+        calcRoute(directionsService, directionsDisplay, route);
+        newRoute=false;
+    }
+
 }
 
 function initCalc(pos){
@@ -137,9 +113,7 @@ function initCalc(pos){
           // "property."
           travelMode: google.maps.TravelMode['WALKING']
     };
-    
 
-    
 }
 
 //called when the position is successfully determined

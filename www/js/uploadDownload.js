@@ -8,12 +8,17 @@ $(document).on("click","#selectButton",selectCourse);
 $(document).on('pageshow','#courseSelect',loadCourses);
 
 function saveMap(){
-    var geo = getGeo();
-    upload(geo);
+    if($('#courseNameInput').val()!=""){
+       var geo = getGeo();
+        upload(geo); 
+    }else{
+        alert("Please add a Name");
+    }
+    
 }
 
 function upload(geo){
-    console.log($('#courseNameInput'));
+    
     var newCourse={
         courseName: $('#courseNameInput').val(),
         origin: geo[0].place_id,
@@ -75,6 +80,8 @@ function loadRace(course){
         destination: placeMaker(course.destination),
         travelMode: google.maps.TravelMode['WALKING']
     };
+    
+    navigator.geolocation.getCurrentPosition(init, failPosition);  
     calcRoute(directionsService, raceDisplay, rc);
 }
 
