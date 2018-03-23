@@ -62,11 +62,14 @@ function processResults(courses){
 
 function selectCourse(){
     //Get ID
+    console.log("selecting course");
     var id = getSelection();
+    console.log("id: "+id);
     Backendless.Data.of("courses").findById(id).then(loadRace).catch(error);
 }
 
 function loadRace(course){
+    console.log(course);
     var rc={
         origin: placeMaker(course.origin),
         destination: placeMaker(course.destination),
