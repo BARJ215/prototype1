@@ -23,7 +23,7 @@ function initMap(pos){
      map = new google.maps.Map(document.getElementById("mapdiv"), {
         center: pos,
         zoom: 15,
-        draggable:false
+        gestureHandling: 'cooperative'
         
     });
     
