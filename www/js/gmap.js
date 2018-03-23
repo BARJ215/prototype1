@@ -13,7 +13,7 @@ $(document).on("pageshow","#mapEditor", function() {
     navigator.geolocation.getCurrentPosition(init, failPosition);
     
 });
-$(document).on("pageinit","#race", function(){
+$(document).on("pageinit","#race","#courseSelect", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
 
