@@ -13,76 +13,118 @@
 </head>
 
 <body>
-<div data-role="page" id="courseSelect">
-    <div data-role="header">
-        <button id="menuButton">MENU</button>
-        <h1>Raccer</h1>
-        <a href='#mapEditor'data-icon="plus" id="newButton">NEW</a>
-    </div> 
-    
-    <div data-role="main">
-        <div id="score">
-            <h3>SCORE: 1000</h3>
-            Leaderboard:
-            <ul data-role="listview" id="leaderboard">
-                <li>1. Superman -   </li>
-                <li>2. Flash</li>
-                <li>3. Billy Whiz</li>
-            </ul><br>
-        </div>
-    <form>
+<div data-role="page" id="main">
+    <div data-role="header" class="ui-bar-c" >
+        <!--<h1>Time to Go</h1>-->
         
-        <fieldset id="courseList" data-role="controlgroup">
-        </fieldset>
-    </form>
-    
-    </div>
-    <div data-role="footer" data-position="fixed" data-theme="c">
+        <h1><img src="img/ttg.png" width="150"  /></h1>
+    </div> 
+    <div data-role="main">
         <div data-role="navbar">
             <ul>
-                <li><a href="#race" data-role="button" id="selectButton">SELECT</a></li>
+                <li><a>Achievements</a></li>
+                <li><a href='#courseSelect'>Courses</a></li>
+                <li><a>Leaderboard</a></li>
             </ul>
         </div>
+        
+        <p>Recently Added:</p>
+        
+        <p>Recommendations:</p>
+        
+        <div id="signIn">
+        </div>
+
+  </div>
+    <div data-role="footer" data-position="fixed" >
+
     </div>
 </div>
     
-    
 
 <div data-role="page" id="mapEditor">
-    <div data-role="header">
-        <a href='#courseSelect' id="backButton">BACK</a>
-        <h1>Course Editor</h1>
-        <a href='#courseSelect' id="uploadButton" data-icon="check">SAVE</a>
+    <div data-role="header" class="ui-bar-c" >
+        <!--<h1>Time to Go</h1>-->
+        <a href='#courseSelect' data-icon="arrow-l" id="backButton">Back</a>
+        <h1><img src="img/ttg.png" width="150"  /></h1>
     </div>
-   
-    
-    <div role="main" class="ui-content" id="map-content">
+	<div role="main" class="ui-content" id="map-content">
         <div id="mapdiv"></div>
-                <div data-role="navbar">
-            <input type="text" value="" placeholder="Name" required id="courseNameInput">
+    </div>
+	
+    <div data-role="footer" data-position="fixed" >
+        <div data-role="navbar">
+            <input type="text" value="" placeholder="Enter Name" required id="courseNameInput">
+            <div data-role="navbar">
+                <ul>
+                    <li><a>On-Foot</a></li>
+                    <li><a>Cycle</a></li>
+                    <li><a>Vehicle</a></li>
+                    <li><a>Other</a></li>
+                </ul>
+            </div>
+            <li><a href="#courseSelect" id="uploadButton">Save</a></li>
+        </div>
+    </div>
+
+</div>
+    
+<div data-role="page" id="courseSelect">
+
+    <div data-role="header" class="ui-bar-c" >
+        <!--<h1>Time to Go</h1>-->
+        <a href='#main' data-icon="arrow-l" id="backButton">Back</a>
+        <h1><img src="img/ttg.png" width="150"  /></h1>
+    </div> 
+    <div data-role="main">
+        <div data-role="navbar">
             <ul>
-                <li><a href='#courseSelect' id="uploadButton" data-icon="check"></a></li>
+                <li><a>Achievements</a></li>
+                <li><a class="ui-btn-active">Courses</a></li>
+                <li><a>Leaderboard</a></li>
             </ul>
         </div>
+
+        <!--<a href='#mapEditor' data-role="button" data-icon="plus" id="newButton">NEW</a>-->
         
+        <form>
+            <fieldset id="courseList" data-role="controlgroup">
+            </fieldset>
+        </form>
+    
     </div>
-
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <li><a href='#mapEditor' id="newButton">NEW</a></li>
+        </div>
+        <div data-role="navbar">
+            <li><a href="#race" data-role="button" id="selectButton">SELECT</a></li>
+        </div>
+    </div>
     
-
-    
-  </div>
-
-    
-
-    
+</div>
 <div data-role="page" id="race">
+    <div data-role="header" class="ui-bar-c" >
+        <!--<h1>Time to Go</h1>-->
+        <a href='#courseSelect' data-icon="arrow-l" id="backButton">Back</a>
+        <h1><img src="img/ttg.png" width="150"  /></h1>
+    </div>
     <div data-role="header">
-        <a href='#courseSelect' id="backButton">BACK</a>
-        <h1>Race</h1>
-    </div> 
+            <h2>00:00:00</h2>
+    </div>
+    <div data-role="header" data-theme="d">
+            <h2>GOAL: 00:00:00</h2>
+    </div>
     <div data-role="main" id="map-content">
         <div id="raceMap"></div>
-    </div> 
+    </div>
+    <div data-role="footer" data-position="fixed" data-theme="b" >
+        <div data-role="navbar">
+            <li><a>START</a></li>
+        </div>
+    </div>
+    
+    
 </div>
     
 
