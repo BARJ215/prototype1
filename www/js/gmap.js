@@ -14,9 +14,38 @@ $(document).on("pageshow","#mapEditor", function() {
     
 });
 
-$(document).on("pageshow","#race","#courseSelect", function(){
+
+$(document).on("pageshow","#courseSelect","#race", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
+
+$('selectButton').on("tap",function(){
+   $.mobile.showPageLoadingMsg
+   if(loading==true){
+       $.mobile.hidePageLoadingMsg
+   }
+});
+
+function init(position){
+    console.log("init");
+
+    //Get position
+    var currentPos = convertPosition(position);
+
+    if(loading==false){
+        initMap(currentPos);    
+        initCalc(currentPos);
+        //Add marker on current position
+        addMarker(currentPos);
+        loading=true;
+        console.log("loaded");
+    }
+    if(newRoute==true){
+        calcRoute(directionsService, directionsDisplay, route);
+        newRoute=false;
+    }
+
+}
 
 function initMap(pos){
     //detectBrowser();
@@ -36,15 +65,39 @@ function initMap(pos){
     return map;
 }
 
+function initCalc(pos){
+    
+    directionsDisplay = new google.maps.DirectionsRenderer({
+        draggable:true,
+        map: map
+    });
+    
+    raceDisplay = new google.maps.DirectionsRenderer({
+        draggable:false,
+        map: raceMap
+    });
+    
+        
+    directionsService = new google.maps.DirectionsService;
+    
+    route ={
+          origin: {lat: pos.lat,lng: pos.lng-0.003},  // Haight.
+          destination: {lat: pos.lat,lng: pos.lng+0.003},  // Ocean Beach.
+          // Note that Javascript allows us to access the constant
+          // using square brackets and a string value as its
+          // "property."
+          travelMode: google.maps.TravelMode['WALKING']
+    };
+    
+    console.log(directionsService);
+}
 
 function detectBrowser(id) {
     var useragent = navigator.userAgent;
     var mapdiv = document.getElementById("mapdiv");
     mapdiv.style.width = '100%';
-    mapdiv.style.height = '800px';
     var racediv = document.getElementById("raceMap");
     racediv.style.width = '100%';
-    racediv.style.height = '800px';
 }
 
 function addMarker(location){
@@ -70,53 +123,6 @@ function deleteMarkers(){
 }
 
 
-function init(position){
-    console.log("init");
-
-    //Get position
-    var currentPos = convertPosition(position);
-
-    if(loading==false){
-        initMap(currentPos);    
-        initCalc(currentPos);
-        //Add marker on current position
-        addMarker(currentPos);
-        loading=true;
-        console.log("loaded");
-    }
-    if(newRoute==true){
-        calcRoute(directionsService, directionsDisplay, route);
-        newRoute=false;
-    }
-
-}
-
-function initCalc(pos){
-    
-    
-    directionsDisplay = new google.maps.DirectionsRenderer({
-        draggable:true,
-        map: map
-    });
-    
-    raceDisplay = new google.maps.DirectionsRenderer({
-        draggable:false,
-        map: raceMap
-    });
-    
-        
-    directionsService = new google.maps.DirectionsService;
-    
-    route ={
-          origin: {lat: pos.lat,lng: pos.lng-0.003},  // Haight.
-          destination: {lat: pos.lat,lng: pos.lng+0.003},  // Ocean Beach.
-          // Note that Javascript allows us to access the constant
-          // using square brackets and a string value as its
-          // "property."
-          travelMode: google.maps.TravelMode['WALKING']
-    };
-
-}
 
 //called when the position is successfully determined
 function convertPosition(position) {
@@ -169,6 +175,3 @@ function resetEditor(){
     
 }
 
-function track(pos){
-        console.log("tracking");
-}
