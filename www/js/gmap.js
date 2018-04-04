@@ -9,6 +9,9 @@ var markers= [];
 var directionsDisplay;
 var raceDisplay;
 var stopTracking=false;
+var oldPos;
+var racing;
+var startTime;
 
 $(document).on("pageshow","#mapEditor", function() {
     newRoute=true;
@@ -24,13 +27,20 @@ $(document).on("pageshow","#courseSelect","#race", function(){
 $(document).on("pageshow","#race", function(){
     var locationOptions = {
         //maximumAge: 10000,
-        //timeout: 6000,
+        timeout: 10,
         //enableHighAccuracy: true
-    };    
-    trackID=navigator.geolocation.watchPosition(track,failPosition,locationOptions);
+    };
+    if(loading==true){
+        oldPos={
+            lat:0,
+            lng:0
+        }
+        trackID=navigator.geolocation.watchPosition(track,failPosition,locationOptions);
+    }
 });
 
 $(document).on("pagehide","#race", function(){
+    racing=false;
     navigator.geolocation.clearWatch(trackID);
     console.log("stopped tracking");
 });
@@ -177,7 +187,8 @@ function calcRoute(directionsService, directionsDisplay, route) {
           } else {
             window.alert('Directions request failed due to ' + status);
           }
-        });     
+        });
+    
 }
 
 function getGeo(){
@@ -197,8 +208,64 @@ function resetEditor(){
 }
 
 function track(position){
-    console.log("tracking");
-    deleteMarkers();
+    //console.log("tracking");
+    
     var pos=convertPosition(position);
-    addRaceMarker(pos);
+    var range=0.0015;
+    if(racing==true){
+        var currentTime=new Date();
+        currentTime={
+                h:currentTime.getHours(),
+                m:currentTime.getMinutes(),
+                s:currentTime.getSeconds()
+        }
+        //FORMAT STOPWATCH
+        var h = currentTime.h-startTime.h;
+        if(currentTime.m>=startTime.m){
+            var m = currentTime.m-startTime.m
+        }else{
+            var m=60-startTime.m+currentTime.m
+            h--;
+        }
+        if(currentTime.s>=startTime.s){
+            var s = currentTime.s-startTime.s
+        }else{
+            var s=60-startTime.s+currentTime.s
+            m--;
+        }
+        $('#time').empty();
+        $('#time').append("<h1 style='text-align:center'>"+h+":"+m+":"+s+"</h1>");
+        //CHECK IF REACHED DESTINATION
+        if((pos.lat<=(route.destination.lat+range))&&(pos.lat>=(route.destination.lat-range))&&(pos.lng<=(route.destination.lng+range))&&(pos.lng>=(route.destination.lng-range))){
+            console.log("reached point b");
+            racing=false;
+        }
+    }else{
+        //CHECK IF READY TO START RACE
+        if((pos.lat<=(route.origin.lat+range))&&(pos.lat>=(route.origin.lat-range))&&(pos.lng<=(route.origin.lng+range))&&(pos.lng>=(route.origin.lng-range))){
+            racing=true;
+            //Start Race
+            startTime = new Date();
+            startTime={
+                h:startTime.getHours(),
+                m:startTime.getMinutes(),
+                s:startTime.getSeconds()
+            }
+            $('#time').empty();
+            $('#time').append("<h2 style='text-align:center'>0:0:0</h2>");
+        }else{
+            $('#time').empty();
+            $('#time').append("<h2 style='text-align:center'>Get closer to Point A to start!</h2>");
+        }
+    }
+    //UPDATE LOCATION MARKER
+    if(pos.lat!=oldPos.lat&&pos.lng!=oldPos.lng){
+        deleteMarkers();
+        addRaceMarker(pos);
+        console.log("Position - Lat: "+ pos.lat+ " Lng: "+pos.lng);
+        console.log("Euclidean Distance to Origin - Lat:"+(route.origin.lat-pos.lat)+" Lng: "+(route.origin.lng-pos.lng));
+        console.log("Destination -  Lat: "+route.destination.lat+" Lng: "+route.destination.lng);
+        oldPos=pos;
+    }
+
 }
