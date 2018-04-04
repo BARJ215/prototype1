@@ -121,6 +121,18 @@ function addMarker(location){
     console.log("add marker");
 }
 
+function addRaceMarker(location){
+    //Create a new marker
+    var marker = new google.maps.Marker({
+        position: location,
+        label: "YOU",
+        map: raceMap    
+    });
+    //Add marker to array
+    markers.push(marker);
+    console.log("add marker");
+}
+
 function deleteMarkers(){
     console.log("markers cleared");
     //Remove all markers from the map
@@ -186,4 +198,7 @@ function resetEditor(){
 
 function track(position){
     console.log("tracking");
+    deleteMarkers();
+    var pos=convertPosition(position);
+    addRaceMarker(pos);
 }
