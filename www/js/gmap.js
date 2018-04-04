@@ -19,12 +19,6 @@ $(document).on("pageshow","#courseSelect","#race", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
 
-$('selectButton').on("tap",function(){
-   $.mobile.showPageLoadingMsg
-   if(loading==true){
-       $.mobile.hidePageLoadingMsg
-   }
-});
 
 function init(position){
     console.log("init");
