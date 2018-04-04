@@ -1,3 +1,4 @@
+var trackID;
 var map;
 var raceMap;
 var directionsService;
@@ -7,6 +8,7 @@ var loading = false;
 var markers= [];
 var directionsDisplay;
 var raceDisplay;
+var stopTracking=false;
 
 $(document).on("pageshow","#mapEditor", function() {
     newRoute=true;
@@ -19,6 +21,19 @@ $(document).on("pageshow","#courseSelect","#race", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
 
+$(document).on("pageshow","#race", function(){
+    var locationOptions = {
+        //maximumAge: 10000,
+        //timeout: 6000,
+        //enableHighAccuracy: true
+    };    
+    trackID=navigator.geolocation.watchPosition(track,failPosition,locationOptions);
+});
+
+$(document).on("pagehide","#race", function(){
+    navigator.geolocation.clearWatch(trackID);
+    console.log("stopped tracking");
+});
 
 function init(position){
     console.log("init");
@@ -169,3 +184,6 @@ function resetEditor(){
     
 }
 
+function track(position){
+    console.log("tracking");
+}
