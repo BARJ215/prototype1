@@ -14,7 +14,7 @@
 
 <body>
 <div data-role="page" id="main">
-    <div data-role="header" class="ui-bar-c" >
+    <div data-role="header" class="ui-bar-c" data-position="fixed">
         <!--<h1>Time to Go</h1>-->
         
         <h1><img src="img/ttg.png" width="150"  /></h1>
@@ -43,7 +43,7 @@
     
 
 <div data-role="page" id="mapEditor">
-    <div data-role="header" class="ui-bar-c" >
+    <div data-role="header" class="ui-bar-c" data-position="fixed" >
         <!--<h1>Time to Go</h1>-->
         <a href='#courseSelect' data-icon="arrow-l" id="backButton">Back</a>
         <h1><img src="img/ttg.png" width="150"  /></h1>
@@ -71,7 +71,7 @@
     
 <div data-role="page" id="courseSelect">
 
-    <div data-role="header" class="ui-bar-c" >
+    <div data-role="header" class="ui-bar-c" data-position="fixed" >
         <!--<h1>Time to Go</h1>-->
         <a href='#main' data-icon="arrow-l" id="backButton">Back</a>
         <h1><img src="img/ttg.png" width="150"  /></h1>
@@ -86,7 +86,7 @@
         </div>
 
         <!--<a href='#mapEditor' data-role="button" data-icon="plus" id="newButton">NEW</a>-->
-        
+        <input type="text" value="" placeholder="Search">
         <form>
             <fieldset id="courseList" data-role="controlgroup">
             </fieldset>
@@ -104,8 +104,8 @@
     
 </div>
 <div data-role="page" id="race">
-    <div data-role="header" class="ui-bar-c" >
-        <!--<h1>Time to Go</h1>-->
+    <!--
+    <div data-role="header" class="ui-bar-c" data-position="fixed" >
         <a href='#courseSelect' data-icon="arrow-l" id="backButton">Back</a>
         <h1><img src="img/ttg.png" width="150"  /></h1>
     </div>
@@ -115,15 +115,32 @@
     <div data-role="header" data-theme="d">
             <h2>GOAL: 00:00:00</h2>
     </div>
+    -->
     <div data-role="main" id="map-content">
-        <div id="raceMap"></div>
+            <div data-role="header" class="ui-bar-c" data-position="fixed" >
+        <a href='#courseSelect' data-icon="arrow-l" id="backButton">Back</a>
+        <h1><img src="img/ttg.png" width="150"  /></h1>
     </div>
+    <div data-role="header">
+            <h2>00:00:00</h2>
+    </div>
+    <div data-role="header" data-theme="d">
+            <h2>GOAL: 00:00:00</h2>
+    </div>
+        <div id="raceMap"></div>
+            <div data-role="footer" data-position="fixed" data-theme="b" >
+        <div data-role="navbar">
+            <li><a>START</a></li>
+        </div>
+    </div>
+    </div>
+    <!--
     <div data-role="footer" data-position="fixed" data-theme="b" >
         <div data-role="navbar">
             <li><a>START</a></li>
         </div>
     </div>
-    
+    -->
     
 </div>
     

@@ -13,7 +13,8 @@ $(document).on("pageshow","#mapEditor", function() {
     navigator.geolocation.getCurrentPosition(init, failPosition);
     
 });
-$(document).on("pageinit","#race","#courseSelect", function(){
+
+$(document).on("pageshow","#race","#courseSelect", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
 
@@ -166,4 +167,8 @@ function resetEditor(){
     
     deleteMarkers();
     
+}
+
+function track(pos){
+        console.log("tracking");
 }
