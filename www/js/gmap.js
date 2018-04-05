@@ -265,7 +265,7 @@ function track(position){
             $('#time').append("<h1><span id='timebg'>GET TO 'POINT A' TO START</span></h1>");
             $('#raceInfo').empty();
             estimate="00:00:00";
-            $('#raceInfo').append("<h3><span id='infobg'>Estimated Time"+estimate+"</span></h3>");
+            $('#raceInfo').append("<h3><span id='infobg'>Estimated Time "+estimate+"</span></h3>");
             
         }
     }
