@@ -12,6 +12,7 @@ var stopTracking=false;
 var oldPos;
 var racing;
 var startTime;
+var estimate;
 
 $(document).on("pageshow","#mapEditor", function() {
     newRoute=true;
@@ -40,7 +41,11 @@ $(document).on("pageshow","#race", function(){
 });
 
 $(document).on("pagehide","#race", function(){
-    racing=false;
+    if(racing==true){
+        //SAVE RACE OR END IT
+        racing=false;
+        
+    }
     navigator.geolocation.clearWatch(trackID);
     console.log("stopped tracking");
 });
@@ -234,7 +239,7 @@ function track(position){
             m--;
         }
         $('#time').empty();
-        $('#time').append("<h1 style='text-align:center'>"+h+":"+m+":"+s+"</h1>");
+        $('#time').append("<h1>"+h+":"+m+":"+s+"</h1>");
         //CHECK IF REACHED DESTINATION
         if((pos.lat<=(route.destination.lat+range))&&(pos.lat>=(route.destination.lat-range))&&(pos.lng<=(route.destination.lng+range))&&(pos.lng>=(route.destination.lng-range))){
             console.log("reached point b");
@@ -252,10 +257,16 @@ function track(position){
                 s:startTime.getSeconds()
             }
             $('#time').empty();
-            $('#time').append("<h2 style='text-align:center'>0:0:0</h2>");
+            $('#time').append("<h1>0:0:0</h1>");
+            $('#raceInfo').empty();
+            $('#raceInfo').append("<h3><span id='infobg'>"+estimate+"</span></h3>");
         }else{
             $('#time').empty();
-            $('#time').append("<h2 style='text-align:center'>Get closer to Point A to start!</h2>");
+            $('#time').append("<h1><span id='timebg'>GET TO 'POINT A' TO START</span></h1>");
+            $('#raceInfo').empty();
+            estimate="00:00:00";
+            $('#raceInfo').append("<h3><span id='infobg'>Estimated Time"+estimate+"</span></h3>");
+            
         }
     }
     //UPDATE LOCATION MARKER
