@@ -74,16 +74,27 @@ function init(position){
 function initMap(pos){
     //detectBrowser();
 
-     map = new google.maps.Map(document.getElementById("mapdiv"), {
+    map = new google.maps.Map(document.getElementById("mapdiv"), {
         center: pos,
         zoom: 15,
-        gestureHandling: 'cooperative'
-        
+        gestureHandling: 'cooperative',
+        disableDefaultUI:true,
+        zoomControl: true,
+          zoomControlOptions: {
+              position: google.maps.ControlPosition.TOP_RIGHT
+        }
+                 
     });
     
     raceMap = new google.maps.Map(document.getElementById("raceMap"), {
         center: pos,
-        zoom: 15
+        zoom: 15,
+        disableDefaultUI:true,
+        zoomControl: true,
+          zoomControlOptions: {
+              position: google.maps.ControlPosition.LEFT_CENTER
+        }
+        
     });
     
     return map;
@@ -257,12 +268,12 @@ function track(position){
                 s:startTime.getSeconds()
             }
             $('#time').empty();
-            $('#time').append("<h1>0:0:0</h1>");
+            $('#time').append("<h1>GO!</h1>");
             $('#raceInfo').empty();
             $('#raceInfo').append("<h3><span id='infobg'>"+estimate+"</span></h3>");
         }else{
             $('#time').empty();
-            $('#time').append("<h1><span id='timebg'>GET TO 'POINT A' TO START</span></h1>");
+            $('#time').append("<h1><span id='timebg'>GET TO 'POINT A'</span></h1>");
             $('#raceInfo').empty();
             estimate="00:00:00";
             $('#raceInfo').append("<h3><span id='infobg'>Estimated Time "+estimate+"</span></h3>");
