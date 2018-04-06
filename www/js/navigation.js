@@ -1,18 +1,18 @@
 $(document).on("swipeleft","#main", function(){
     console.log("swipe");
-    //$.mobile.changePage("#courseList", { transition: "slideright"});
+    $.mobile.changePage($("#courseSelect"), { transition: "slideright", changeHash:true});
+
    
-    $.mobile.pagecontainer( "change", "#courseList", {
-            transition: "slide",
-            reverse: true
-    });
 });
-$(document).on("swiperight","#courseList", function(){
-    $.mobile.changePage("#main", { transition: "slideleft"});
+$(document).on("swiperight","#courseSelect", function(){
+    console.log("swipe");
+    $.mobile.changePage($("#main"), { transition: "slideleft"});
 });
-$(document).on("swipeleft","#courseList", function(){
-    $.mobile.changePage("#leaderboard", { transition: "slideright"});
+$(document).on("swipeleft","#courseSelect", function(){
+    console.log("swipe");
+    $.mobile.changePage($("#leaderboard"), { transition: "slideright"});
 });
 $(document).on("swiperight","#leaderboard", function(){
-    $.mobile.changePage("#courseList", { transition: "slideleft"});
+    console.log("swipe");
+    $.mobile.changePage($("#courseSelect"), { transition: "slideleft"});
 });
