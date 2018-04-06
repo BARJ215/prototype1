@@ -13,6 +13,7 @@
 <script src="js/uploadDownload.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/Ractive.js"></script>
+<!--<script src="js/mainPage.js"></script>-->
 </head>
 
 <body>
@@ -28,15 +29,28 @@
                 <li><a href="#leaderboard">Leaderboard</a></li>
             </ul>
         </div>
-        <div id="roundedBox">
-            <h2>Challenges:</h2>
+        <div class="roundedBox">
+            <legend><b>Challenges:</b></legend>
+            <ul id="challengeBox" data-role="listview" data-inset="true" data-shadow="false">
+                <li>Complete 3 Race <span class="ui-li-count">100</span></li>
+                <li>Beat Your Estimated Time <span class="ui-li-count">100</span></li>
+                <li>Invite a Friend to play <span class="ui-li-count">500</span></li>
+            </ul>
+            <!--
+            <h3>Recently Added:</h3>
+        
+            <h3>Recommended:</h3>-->
         </div>
+        <!--
+        <script id="challengeTemplate" type="text/ractive">
+            {{#each c}}
+                <li>{{.name}}</li>
+            {{/each}}  
+        </script>
+        -->
         
-        
-        <p>Recently Added:</p>
-        
-        <p>Recommendations:</p>
-        
+
+
         <div id="signIn">
         </div>
 
@@ -145,6 +159,8 @@
     
     </div>    
 </div>
+
+
     
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAPIpoKTJCeTlhJyWooKfnRLCj24hps3I"async defer></script>
 </body>
