@@ -30,16 +30,26 @@
             </ul>
         </div>
         <div class="roundedBox">
-            <legend><b>Challenges:</b></legend>
+            <h3 style="text-align: center; margin: 0px;">Challenges</h3>
             <ul id="challengeBox" data-role="listview" data-inset="true" data-shadow="false">
-                <li>Complete 3 Race <span class="ui-li-count">100</span></li>
-                <li>Beat Your Estimated Time <span class="ui-li-count">100</span></li>
-                <li>Invite a Friend to play <span class="ui-li-count">500</span></li>
+                <li>Invite a Friend<span class="ui-li-count">500pts</span></li>
+                <li>Complete 3 Races<span class="ui-li-count">100pts</span></li>
+                <li>Beat Your Estimated Time<span class="ui-li-count">100pts</span></li>
             </ul>
-            <!--
-            <h3>Recently Added:</h3>
-        
-            <h3>Recommended:</h3>-->
+        </div>
+        <div class="roundedBox">
+            <h3 style="text-align: center; margin: 0px;">Recently Added</h3>
+            <ul id="recentBox" data-role="listview" style="margin-bottom: 25px;"data-inset="true" data-shadow="false">
+                <li><a>Park Run</a></li>
+                <li><a>Around the Cathedral</a></li>
+            </ul>
+        </div>
+        <div class="roundedBox">
+            <h3 style="text-align: center; margin: 0px;">Recommended</h3>
+            <ul id="recentBox" data-role="listview" style="margin-bottom: 25px;"data-inset="true" data-shadow="false">
+                <li><a>Race to the University</a></li>
+                <li><a>Fast River Cycle</a></li>
+            </ul>
         </div>
         <!--
         <script id="challengeTemplate" type="text/ractive">
@@ -48,9 +58,6 @@
             {{/each}}  
         </script>
         -->
-        
-
-
         <div id="signIn">
         </div>
 
@@ -151,7 +158,16 @@
                 <li><a class="ui-btn-active">Leaderboard</a></li>
             </ul>
         </div>
-        
+        <div class="roundedBox">
+            <h3 style="text-align: center; margin: 0px;">Leaderboard</h3>
+            <ol id="challengeBox" data-role="listview" data-inset="true" data-shadow="false">
+                <li>Sam S<span class="ui-li-count">8900pts</span></li>
+                <li>David D <span class="ui-li-count">8650pts</span></li>
+                <li>Kate K<span class="ui-li-count">7450pts</span></li>
+                <li>Chris C<span class="ui-li-count">6790pts</span></li>
+                <li>Noel N<span class="ui-li-count">6780pts</span></li>
+            </ol>
+        </div>
         <form>
             <fieldset id="leaderboardList">
             </fieldset>

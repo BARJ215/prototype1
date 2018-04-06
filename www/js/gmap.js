@@ -253,7 +253,7 @@ function track(position){
         $('#time').append("<h1>"+h+":"+m+":"+s+"</h1>");
         //CHECK IF REACHED DESTINATION
         if((pos.lat<=(route.destination.lat+range))&&(pos.lat>=(route.destination.lat-range))&&(pos.lng<=(route.destination.lng+range))&&(pos.lng>=(route.destination.lng-range))){
-            console.log("reached point b");
+            console.log("Finished");
             racing=false;
         }
     }else{
@@ -273,7 +273,7 @@ function track(position){
             $('#raceInfo').append("<h3><span id='infobg'>"+estimate+"</span></h3>");
         }else{
             $('#time').empty();
-            $('#time').append("<h1><span id='timebg'>GET TO 'POINT A'</span></h1>");
+            $('#time').append("<h1><span id='timebg'>GO TO 'POINT A'</span></h1>");
             $('#raceInfo').empty();
             estimate="00:00:00";
             $('#raceInfo').append("<h3><span id='infobg'>Estimated Time "+estimate+"</span></h3>");
