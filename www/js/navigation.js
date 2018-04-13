@@ -18,3 +18,6 @@ $(document).on("swipeleft","#mapEditor", function(){
     console.log("swipe");
     $("#mapPanel").panel("open");
 });
+$(document).on("swipeleft","#race", function(){
+    $("#raceMapPanel").panel("open");
+});

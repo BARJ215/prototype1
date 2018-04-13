@@ -149,6 +149,15 @@
     </div>
     <div id="raceInfo"></div>
     <div id="time"></div>
+    <div id="raceMapPanel" data-role="panel" data-display="overlay" data-position="right" >
+        <h2>Center</h2>
+        <button id="raceCenterYou">You</button>
+        <button id="raceCenterA">A</button>
+        <button id="raceCenterB">B</button>
+        <h2>DEBUGGING TOOLS</h2>
+        <button id="startRaceButton">Start</button>
+        <button id="finishRaceButton">Finish</button>
+    </div>
 </div>
     
 <div data-role="page" id="leaderboard">
@@ -184,5 +193,5 @@
 
 
     
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAPIpoKTJCeTlhJyWooKfnRLCj24hps3I"async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAPIpoKTJCeTlhJyWooKfnRLCj24hps3I&libraries=places"async defer></script>
 </body>

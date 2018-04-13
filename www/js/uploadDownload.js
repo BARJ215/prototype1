@@ -2,10 +2,18 @@ Backendless.initApp("1F116359-9934-2652-FF41-EC23042C0400","B59AA48F-500F-B1E8-F
 
 var raceDisplay;
 var raceDirectionService;
+var raceCourse;
+var estimate;
 
 $(document).on("click","#uploadButton",saveMap);
 $(document).on("click","#selectButton",selectCourse);
 $(document).on('pageshow','#courseSelect',loadCourses);
+$(document).on("click","#raceCenterA", function(){
+    centerPlace(raceCourse.origin.placeId);
+});
+$(document).on("click","#raceCenterB", function(){
+    centerPlace(raceCourse.destination.placeId);
+});
 
 function saveMap(){
     if($('#courseNameInput').val()!=""){
@@ -75,14 +83,24 @@ function selectCourse(){
 
 function loadRace(course){
     console.log(course);
-    var rc={
+    raceCourse={
         origin: placeMaker(course.origin),
         destination: placeMaker(course.destination),
         travelMode: google.maps.TravelMode['WALKING']
     };
-    
+    console.log(raceCourse);
     navigator.geolocation.getCurrentPosition(init, failPosition);  
-    calcRoute(directionsService, raceDisplay, rc);
+    calcRoute(directionsService, raceDisplay, raceCourse);
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+        {origins:[placeMaker(course.origin)],
+         destinations: [placeMaker(course.destination)],
+         travelMode: google.maps.TravelMode['WALKING']
+        },function(serv,status){
+            estimate=serv.rows[0].elements[0].duration.value;
+            console.log(estimate);
+        }
+    )
 }
 
 function placeMaker(id){
@@ -101,4 +119,20 @@ function getSelection(){
         }
     }
     return objectId;
+}
+
+function centerPlace(pID){
+
+    var placeServ = new google.maps.places.PlacesService(raceMap)
+    placeServ.getDetails({placeId:pID},function(place,status){
+        console.log(place.geometry.location);
+        console.log(place.geometry.location.lat())
+        var pos= {
+            lat: 0,
+            lng: 0
+        }
+        pos.lat=place.geometry.location.lat();
+        pos.lng=place.geometry.location.lng();
+        centerRaceMap(pos);
+    })
 }

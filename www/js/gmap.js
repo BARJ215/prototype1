@@ -12,7 +12,11 @@ var stopTracking=false;
 var oldPos;
 var racing;
 var startTime;
-var estimate;
+var currentPos;
+
+$(document).on("pageshow","#courseSelect", function(){
+    navigator.geolocation.getCurrentPosition(init, failPosition);
+});
 
 $(document).on("pageshow","#mapEditor", function() {
     newRoute=true;
@@ -20,12 +24,8 @@ $(document).on("pageshow","#mapEditor", function() {
     
 });
 
-
-$(document).on("pageshow","#courseSelect","#race", function(){
-    navigator.geolocation.getCurrentPosition(init, failPosition);
-});
-
 $(document).on("pageshow","#race", function(){
+    navigator.geolocation.getCurrentPosition(init, failPosition);
     var locationOptions = {
         //maximumAge: 10000,
         timeout: 10,
@@ -38,6 +38,7 @@ $(document).on("pageshow","#race", function(){
         }
         trackID=navigator.geolocation.watchPosition(track,failPosition,locationOptions);
     }
+    centerRaceMap(currentPos);
 });
 
 $(document).on("pagehide","#race", function(){
@@ -50,11 +51,45 @@ $(document).on("pagehide","#race", function(){
     console.log("stopped tracking");
 });
 
+$(document).on("click","#centerYou", function(){
+    centerMap(currentPos);
+});
+$(document).on("click","#centerA", function(){
+    centerMap(route.origin);
+});
+$(document).on("click","#centerB", function(){
+    centerMap(route.destination);
+});
+$(document).on("click","#raceCenterYou", function(){
+    centerRaceMap(currentPos);
+});
+$(document).on("click","#startRaceButton", function(){
+    console.log("starting race");
+    startTime = new Date();
+    startTime={
+        h:startTime.getHours(),
+        m:startTime.getMinutes(),
+        s:startTime.getSeconds()
+    }
+    var estH = Math.floor(estimate/3600);
+    var estM = Math.floor((estimate/60)-estH*60);
+    var estS = estimate-estM*60;
+    $('#raceInfo').empty();
+    $('#raceInfo').append("<h3><span id='infobg'>"+estH+":"+estM+":"+estS+"</span></h3>");
+    racing=true;
+});
+$(document).on("click","#finishRaceButton", function(){
+    console.log("ending race");
+    racing=false;
+});
+
+
+
 function init(position){
     console.log("init");
 
     //Get position
-    var currentPos = convertPosition(position);
+    currentPos = convertPosition(position);
 
     if(loading==false){
         initMap(currentPos);    
@@ -68,6 +103,8 @@ function init(position){
         calcRoute(directionsService, directionsDisplay, route);
         newRoute=false;
     }
+    
+    centerMap(currentPos);
 
 }
 
@@ -76,7 +113,7 @@ function initMap(pos){
 
     map = new google.maps.Map(document.getElementById("mapdiv"), {
         center: pos,
-        zoom: 15,
+        zoom: 17,
         gestureHandling: 'cooperative',
         disableDefaultUI:true,
         zoomControl: true,
@@ -88,7 +125,7 @@ function initMap(pos){
     
     raceMap = new google.maps.Map(document.getElementById("raceMap"), {
         center: pos,
-        zoom: 15,
+        zoom: 17,
         disableDefaultUI:true,
         zoomControl: true,
           zoomControlOptions: {
@@ -178,12 +215,12 @@ function convertPosition(position) {
     var longitude = position.coords.longitude;
     
     //Update current position
-    var currentPos= {
+    var pos= {
         lat: latitude,
         lng: longitude
     }
 
-    return currentPos;
+    return pos;
 }
 
 //called if the position is not obtained correctly
@@ -204,7 +241,7 @@ function calcRoute(directionsService, directionsDisplay, route) {
             window.alert('Directions request failed due to ' + status);
           }
         });
-    
+        
 }
 
 function getGeo(){
@@ -228,6 +265,7 @@ function track(position){
     
     var pos=convertPosition(position);
     var range=0.0015;
+    //IF RACE HAS STARTED
     if(racing==true){
         var currentTime=new Date();
         currentTime={
@@ -250,17 +288,18 @@ function track(position){
             m--;
         }
         $('#time').empty();
-        $('#time').append("<h1>"+h+":"+m+":"+s+"</h1>");
+        $('#time').append("<h1><span id='timebg'>"+h+":"+m+":"+s+"</span></h1>");
         //CHECK IF REACHED DESTINATION
         if((pos.lat<=(route.destination.lat+range))&&(pos.lat>=(route.destination.lat-range))&&(pos.lng<=(route.destination.lng+range))&&(pos.lng>=(route.destination.lng-range))){
+            //RACE FINISHED
             console.log("Finished");
             racing=false;
         }
     }else{
         //CHECK IF READY TO START RACE
         if((pos.lat<=(route.origin.lat+range))&&(pos.lat>=(route.origin.lat-range))&&(pos.lng<=(route.origin.lng+range))&&(pos.lng>=(route.origin.lng-range))){
+            //START RACE
             racing=true;
-            //Start Race
             startTime = new Date();
             startTime={
                 h:startTime.getHours(),
@@ -269,14 +308,19 @@ function track(position){
             }
             $('#time').empty();
             $('#time').append("<h1>GO!</h1>");
+            var estH = Math.floor(estimate/3600);
+            var estM = Math.floor((estimate/60)-estH*60);
+            var estS = estimate-estM*60;
             $('#raceInfo').empty();
-            $('#raceInfo').append("<h3><span id='infobg'>"+estimate+"</span></h3>");
+            $('#raceInfo').append("<h3><span id='infobg'>"+estH+":"+estM+":"+estS+"</span></h3>");
         }else{
             $('#time').empty();
             $('#time').append("<h1><span id='timebg'>GO TO 'POINT A'</span></h1>");
+            var estH = Math.floor(estimate/3600);
+            var estM = Math.floor((estimate/60)-estH*60);
+            var estS = estimate-estM*60;
             $('#raceInfo').empty();
-            estimate="00:00:00";
-            $('#raceInfo').append("<h3><span id='infobg'>Estimated Time "+estimate+"</span></h3>");
+            $('#raceInfo').append("<h3><span id='infobg'>Estimated Time "+estH+":"+estM+":"+estS+"</span></h3>");
             
         }
     }
@@ -290,4 +334,13 @@ function track(position){
         oldPos=pos;
     }
 
+}
+
+function centerMap(pos){
+    map.setCenter(pos);
+    map.setZoom(17);
+}
+function centerRaceMap(pos){
+    raceMap.setCenter(pos);
+    raceMap.setZoom(17);
 }
