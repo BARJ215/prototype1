@@ -6,6 +6,7 @@
 ul{
     list-style-type: none;
 }font-family: 'Roboto', sans-serif;
+
 h3{
     text-align:center;
 }
@@ -54,5 +55,31 @@ h3{
 
 #challengeBox{
     padding-bottom: 25px;
+    
+}
+#accountDiv{
+    text-align: center;
+}
+#sidePoints{
+    height: 100px;
+    display: inline-block;
+    padding: 0px;
+    margin: 10px;
+}
+#points{
+    background-color: #1d1d1d;
+    color: white;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 50px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+h4{
+    padding: 0px;
+    margin: 0px;
+}
+#logout{
     
 }
