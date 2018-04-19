@@ -112,3 +112,7 @@ function addPoints(pts){
 function userUpdated(){
     console.log("User updated");
 }
+
+function loadLeaderboard(){
+    
+}
