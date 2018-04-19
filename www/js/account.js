@@ -1,6 +1,7 @@
 //USES CODE FROM https://backendless.com/docs/js/doc.html#dynanchor1
 
 $(document).on("pageinit","#main",accountInit);
+$(document).on("pageshow","#leaderboard",loadLeaderboard);
 $(document).on("click","#login",loginUser);
 $(document).on("click","#logout",logoutUser);
 $(document).on("click","#register",registerScreen);
@@ -101,4 +102,13 @@ function registerScreen(){
     $('#accountDiv').append("<label for='password'>Password*:</label><input name='password' id='password' value='"+pass+"' type='password'>");    
     $('#accountDiv').append("<button id='registerConfirm'>Register</button><button id='cancelRegister'>Cancel</button>");
     $('#accountDiv').trigger("create");   
+}
+
+function addPoints(pts){
+    user.points=user.points+pts;
+    Backendless.UserService.update(user).then(userUpdated).catch(error);
+}
+
+function userUpdated(){
+    console.log("User updated");
 }
