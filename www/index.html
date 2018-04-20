@@ -186,14 +186,12 @@
                 <li><a class="ui-btn-active">Leaderboard</a></li>
             </ul>
         </div>
-        <div class="roundedBox">
+        <a href="#finishDialog" data-rel="dialog">TEST</a>
+        
+        <div class="roundedBox" id="lbDiv">
             <h3 style="text-align: center; margin: 0px;">Leaderboard</h3>
-            <ol id="challengeBox" data-role="listview" data-inset="true" data-shadow="false">
-                <li>Sam S<span class="ui-li-count">8900pts</span></li>
-                <li>David D <span class="ui-li-count">8650pts</span></li>
-                <li>Kate K<span class="ui-li-count">7450pts</span></li>
-                <li>Chris C<span class="ui-li-count">6790pts</span></li>
-                <li>Noel N<span class="ui-li-count">6780pts</span></li>
+            <ol id="lb" data-role="listview" data-inset="true" data-shadow="false">
+
             </ol>
         </div>
         <form>
@@ -204,6 +202,17 @@
     </div>    
 </div>
 
+<div data-role="page" id="finishDialog" data-close-btn="none">
+    <div data-role="header" data-theme="b">
+        <h1>Congratulations</h1>
+    </div> 
+    <p>You have earned</p>
+    <h1 id="pointsText">0pts</h1>
+    <p>Estimated Time: Your Time:</p>
+    <div id="accountPointsDiv">
+    </div>
+    
+</div>
 
     
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAPIpoKTJCeTlhJyWooKfnRLCj24hps3I&libraries=places"async defer></script>

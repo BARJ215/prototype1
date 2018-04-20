@@ -57,6 +57,11 @@ h3{
     padding-bottom: 25px;
     
 }
+#lb{
+    margin-bottom: 25px;
+
+}
+
 #accountDiv{
     text-align: center;
 }
@@ -80,6 +85,7 @@ h4{
     padding: 0px;
     margin: 0px;
 }
-#logout{
-    
+#finishDialog{
+    line-height: 100%;
+    text-align: center;
 }

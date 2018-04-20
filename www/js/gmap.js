@@ -13,6 +13,8 @@ var oldPos;
 var racing;
 var startTime;
 var currentPos;
+var currentTime;
+var reward;
 
 $(document).on("pageshow","#courseSelect", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
@@ -64,23 +66,10 @@ $(document).on("click","#raceCenterYou", function(){
     centerRaceMap(currentPos);
 });
 $(document).on("click","#startRaceButton", function(){
-    console.log("starting race");
-    startTime = new Date();
-    startTime={
-        h:startTime.getHours(),
-        m:startTime.getMinutes(),
-        s:startTime.getSeconds()
-    }
-    var estH = Math.floor(estimate/3600);
-    var estM = Math.floor((estimate/60)-estH*60);
-    var estS = estimate-estM*60;
-    $('#raceInfo').empty();
-    $('#raceInfo').append("<h3><span id='infobg'>"+estH+":"+estM+":"+estS+"</span></h3>");
-    racing=true;
+    startRace();
 });
 $(document).on("click","#finishRaceButton", function(){
-    console.log("ending race");
-    racing=false;
+    endRace();
 });
 
 
@@ -267,52 +256,17 @@ function track(position){
     var range=0.0015;
     //IF RACE HAS STARTED
     if(racing==true){
-        var currentTime=new Date();
-        currentTime={
-                h:currentTime.getHours(),
-                m:currentTime.getMinutes(),
-                s:currentTime.getSeconds()
-        }
-        //FORMAT STOPWATCH
-        var h = currentTime.h-startTime.h;
-        if(currentTime.m>=startTime.m){
-            var m = currentTime.m-startTime.m
-        }else{
-            var m=60-startTime.m+currentTime.m
-            h--;
-        }
-        if(currentTime.s>=startTime.s){
-            var s = currentTime.s-startTime.s
-        }else{
-            var s=60-startTime.s+currentTime.s
-            m--;
-        }
-        $('#time').empty();
-        $('#time').append("<h1><span id='timebg'>"+h+":"+m+":"+s+"</span></h1>");
+        updateTimer();
         //CHECK IF REACHED DESTINATION
         if((pos.lat<=(route.destination.lat+range))&&(pos.lat>=(route.destination.lat-range))&&(pos.lng<=(route.destination.lng+range))&&(pos.lng>=(route.destination.lng-range))){
             //RACE FINISHED
-            console.log("Finished");
-            racing=false;
+            endRace();
         }
     }else{
         //CHECK IF READY TO START RACE
         if((pos.lat<=(route.origin.lat+range))&&(pos.lat>=(route.origin.lat-range))&&(pos.lng<=(route.origin.lng+range))&&(pos.lng>=(route.origin.lng-range))){
             //START RACE
-            racing=true;
-            startTime = new Date();
-            startTime={
-                h:startTime.getHours(),
-                m:startTime.getMinutes(),
-                s:startTime.getSeconds()
-            }
-            $('#time').empty();
-            $('#time').append("<h1>GO!</h1>");
-            var estH = Math.floor(estimate/3600);
-            var estM = Math.floor((estimate/60)-estH*60);
-            var estS = estimate-estM*60;
-            $('#raceInfo').empty();
-            $('#raceInfo').append("<h3><span id='infobg'>"+estH+":"+estM+":"+estS+"</span></h3>");
+            startRace();
         }else{
             $('#time').empty();
             $('#time').append("<h1><span id='timebg'>GO TO 'POINT A'</span></h1>");
@@ -343,4 +297,64 @@ function centerMap(pos){
 function centerRaceMap(pos){
     raceMap.setCenter(pos);
     raceMap.setZoom(17);
+}
+function startRace(){
+    racing=true;
+    startTime = new Date();
+    startTime={
+        utc: startTime.getTime(),
+        h:startTime.getHours(),
+        m:startTime.getMinutes(),
+        s:startTime.getSeconds()
+    }
+    var estH = Math.floor(estimate/3600);
+    var estM = Math.floor((estimate/60)-estH*60);
+    var estS = estimate-estM*60;
+    $('#raceInfo').empty();
+    $('#raceInfo').append("<h3><span id='infobg'>"+estH+":"+estM+":"+estS+"</span></h3>");
+    updateTimer();
+}
+
+function updateTimer(){
+    currentTime=new Date();
+    currentTime={
+        h:currentTime.getHours(),
+        m:currentTime.getMinutes(),
+        s:currentTime.getSeconds()
+    }
+    //FORMAT STOPWATCH
+    var h = currentTime.h-startTime.h;
+    if(currentTime.m>=startTime.m){
+        var m = currentTime.m-startTime.m
+    }else{
+        var m=60-startTime.m+currentTime.m
+        h--;
+    }
+    if(currentTime.s>=startTime.s){
+        var s = currentTime.s-startTime.s
+    }else{
+        var s=60-startTime.s+currentTime.s
+        m--;
+    }
+    $('#time').empty();
+    $('#time').append("<h1><span id='timebg'>"+h+":"+m+":"+s+"</span></h1>");
+}
+function endRace(){
+    currentTime=new Date();
+    currentTime=currentTime.getTime();
+    racing=false;
+    console.log("Finished");
+    var totalTime = Math.round((currentTime-startTime.utc)/1000);
+    console.log("Time: "+totalTime);
+    console.log("Estimate: "+estimate);
+    if (totalTime<estimate){
+        reward=(estimate-totalTime)*10;
+    }else{
+        reward=0;
+    }
+    console.log("You got "+reward);
+    $("#pointsText").empty();
+    $("#pointsText").append(reward+"pts");
+    $("#pointsText").trigger("create");
+    $.mobile.changePage( "#finishDialog", { role: "dialog" } );
 }

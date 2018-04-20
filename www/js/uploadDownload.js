@@ -18,7 +18,7 @@ $(document).on("click","#raceCenterB", function(){
 function saveMap(){
     if($('#courseNameInput').val()!=""){
        var geo = getGeo();
-        upload(geo); 
+        upload(geo);
     }else{
         alert("Please add a Name");
     }
@@ -56,17 +56,21 @@ function error(err){
 }
 
 function loadCourses(){
-    Backendless.Data.of("courses").find().then(processResults).catch(error);   
+    //BASED OFF CODE FROM https://backendless.com/docs/js/doc.html#data_search_with_where_clause
+    var queryBuilder = Backendless.DataQueryBuilder.create();
+    queryBuilder.setSortBy("created");
+    queryBuilder.setPageSize(50);
+    Backendless.Data.of("courses").find(queryBuilder).then(processResults).catch(error);   
 }
 
 function processResults(courses){
     //display the first task in an array of tasks/
     $('#courseList').empty();
     //Add checked course
-    $('#courseList').append("<legend>Your Race Courses:</legend>");
-    $('#courseList').append("<input type='radio' checked name='c' id='p0' value="+courses[0].objectId   +"><label for='p0'>"+courses[0].courseName+"</label>");
+    $('#courseList').append("<legend>Recent Courses:</legend>");
+    $('#courseList').append("<input type='radio' checked name='c' id='p"+(courses.length-1)+"' value="+courses[courses.length-1].objectId   +"><label for='p"+(courses.length-1)+"'>"+courses[courses.length-1].courseName+"</label>");
     //add each new tasks
-    for(var i=1; i<courses.length;i++){
+    for(var i=courses.length-2; i>=0;i--){
         $('#courseList').append("<input type='radio' name='c' id='p"+i+"' value="+courses[i].objectId   +"><label for='p"+i+"'>"+courses[i].courseName+"</label>");
     }
     //refresh the listview
