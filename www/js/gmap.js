@@ -269,7 +269,7 @@ function track(position){
             startRace();
         }else{
             $('#time').empty();
-            $('#time').append("<h1><span id='timebg'>GO TO 'POINT A'</span></h1>");
+            $('#time').append("<h1><span id='timebg'>GO TO POINT A</span></h1>");
             var estH = Math.floor(estimate/3600);
             var estM = Math.floor((estimate/60)-estH*60);
             var estS = estimate-estM*60;
