@@ -1,5 +1,4 @@
 //USES CODE FROM https://backendless.com/docs/js/doc.html#dynanchor1
-
 $(document).on("pageshow","#main",accountInit);
 $(document).on("pageshow","#leaderboard",loadLeaderboard);
 $(document).on("click","#login",loginUser);
@@ -88,6 +87,11 @@ function loggedIn(account){
     $('#accountDiv').append("<span><div id='points'>"+user.points+"<a class='ui-btn ui-shadow ui-corner-all ui-icon-star ui-btn-icon-notext ui-btn-b ui-btn-inline'></a></div>");
     $('#accountDiv').append("<div id='sidePoints'><h4>Welcome back "+user.name+"</h4><button id='logout' class='ui-btn ui-btn-inline'>Log out</button></div></span>");
     $('#accountDiv').trigger("create");
+    //Check if they still redeem some points;
+    if(redeemed==false){
+        addPoints(reward);
+    }
+    
 }
 
 
@@ -174,6 +178,7 @@ function registerScreenP(){
 }
 
 function addPoints(pts){
+    redeemed=true;
     console.log("Adding points");
     console.log("From: "+user.points);
     user.points=user.points+pts;

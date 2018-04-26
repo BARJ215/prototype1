@@ -15,6 +15,7 @@ var startTime;
 var currentPos;
 var currentTime;
 var reward;
+var redeemed=true;
 
 $(document).on("pageshow","#courseSelect", function(){
     navigator.geolocation.getCurrentPosition(init, failPosition);
@@ -75,6 +76,7 @@ $(document).on("click","#finishRaceButton", function(){
 
 
 function init(position){
+    
     console.log("init");
 
     //Get position
@@ -98,7 +100,7 @@ function init(position){
 }
 
 function initMap(pos){
-    //detectBrowser();
+    //Based off code from https://developers.google.com/maps/documentation/javascript/tutorial
 
     map = new google.maps.Map(document.getElementById("mapdiv"), {
         center: pos,
@@ -153,15 +155,8 @@ function initCalc(pos){
     console.log(directionsService);
 }
 
-function detectBrowser(id) {
-    var useragent = navigator.userAgent;
-    var mapdiv = document.getElementById("mapdiv");
-    mapdiv.style.width = '100%';
-    var racediv = document.getElementById("raceMap");
-    racediv.style.width = '100%';
-}
-
 function addMarker(location){
+    //Based off code from https://developers.google.com/maps/documentation/javascript/examples/marker-remove
     //Create a new marker
     var marker = new google.maps.Marker({
         position: location,
@@ -174,6 +169,7 @@ function addMarker(location){
 }
 
 function addRaceMarker(location){
+    //Based off code from https://developers.google.com/maps/documentation/javascript/examples/marker-remove
     //Create a new marker
     var marker = new google.maps.Marker({
         position: location,
@@ -186,6 +182,7 @@ function addRaceMarker(location){
 }
 
 function deleteMarkers(){
+    //Based off code from https://developers.google.com/maps/documentation/javascript/examples/marker-remove
     console.log("markers cleared");
     //Remove all markers from the map
     for (var i = 0; i < markers.length; i++) {
@@ -195,15 +192,11 @@ function deleteMarkers(){
     markers=[];
 }
 
-
-
-//called when the position is successfully determined
+//Converts coords to google api position
 function convertPosition(position) {
-	//lets get some stuff out of the position object
 	var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    
-    //Update current position
+
     var pos= {
         lat: latitude,
         lng: longitude
@@ -212,9 +205,8 @@ function convertPosition(position) {
     return pos;
 }
 
-//called if the position is not obtained correctly
+//Called if failed to get position
 function failPosition(error) {
-	//change time box to show updated messageuklkh/lkhjlkhjlkh lkhlkhlkhlkhlk
 	$('#m1longtext').val("Error getting data: " + error);
 }
 
@@ -253,7 +245,7 @@ function track(position){
     //console.log("tracking");
     
     var pos=convertPosition(position);
-    var range=0.0015;
+    var range=0.002;
     //IF RACE HAS STARTED
     if(racing==true){
         updateTimer();
@@ -353,6 +345,7 @@ function endRace(){
         reward=0;
     }
     console.log("You got "+reward);
+    redeemed=false;
     $("#pointsText").empty();
     $("#pointsText").append(reward+"pts");
     $("#pointsText").trigger("create");
