@@ -1,6 +1,8 @@
 Time-to-go
 =======================
+DESCRIPTION:
 Time to Go is an app that allows player to race in courses created by themselves or other players. The app rewards players with points for beating their friends on courses, beating their estimated times and playing regularly. The players with the highest points are displayed the leaderboard for all to see. 
+PLATFORMS: Android - Testing uses Samsung S9
 
 How to install
 =======================
@@ -15,3 +17,6 @@ You may use these for marking or create your own.
 
 Username: dave@email.com
 Password: password
+
+
+

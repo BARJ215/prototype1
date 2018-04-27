@@ -1,3 +1,6 @@
+//This page consists of all the code that is used to interact with the Google Maps API maps.
+//This page uses code based off the documentation found for the Google Maps API found at https://developers.google.com/maps/documentation/javascript/
+
 var trackID;
 var map;
 var raceMap;
@@ -18,58 +21,80 @@ var reward;
 var redeemed=true;
 
 $(document).on("pageshow","#courseSelect", function(){
+    //Initialise maps
     navigator.geolocation.getCurrentPosition(init, failPosition);
 });
 
 $(document).on("pageshow","#mapEditor", function() {
+    //Initialise maps with new route
     newRoute=true;
     navigator.geolocation.getCurrentPosition(init, failPosition);
     
 });
 
 $(document).on("pageshow","#race", function(){
+    //Initialise race map
     navigator.geolocation.getCurrentPosition(init, failPosition);
-    var locationOptions = {
-        //maximumAge: 10000,
-        timeout: 10,
-        //enableHighAccuracy: true
-    };
+    //Start tracker
+    
+    
     if(loading==true){
+        //If map and course is loaded
+        //Set inital map position
         oldPos={
             lat:0,
             lng:0
         }
+        
+        //Set the tracker to have high accuracy
+        //The following is based off code from https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
+        var locationOptions = {
+            enableHighAccuracy:true
+        };
         trackID=navigator.geolocation.watchPosition(track,failPosition,locationOptions);
     }
+    //Center the race map based on current position
     centerRaceMap(currentPos);
 });
 
 $(document).on("pagehide","#race", function(){
-    if(racing==true){
-        //SAVE RACE OR END IT
-        racing=false;
-        
-    }
+    //This function is classed when the race page is hidden
+    //Stop racing
+    racing=false;
+    //Stop tracker
+    //The following is using code based on https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/clearWatch
     navigator.geolocation.clearWatch(trackID);
     console.log("stopped tracking");
 });
 
 $(document).on("click","#centerYou", function(){
+    //This function is called when the center to you button is clicked on the course Selection page
+    //Center map to current position
     centerMap(currentPos);
 });
 $(document).on("click","#centerA", function(){
+    //This function is called when the center to point A button is clicked on the course Selection page
+    //Center map to point A
     centerMap(route.origin);
 });
 $(document).on("click","#centerB", function(){
+    //This function is called when the center to point B button is clicked on the course Selection page
+    //Center map to point B
     centerMap(route.destination);
 });
 $(document).on("click","#raceCenterYou", function(){
+    //This function is called when the center to you button is clicked on the course race page
+    //Center map to current position
     centerRaceMap(currentPos);
 });
 $(document).on("click","#startRaceButton", function(){
+    //This function is called when the center to point A button is clicked on the course race page
+    //Center map to point A
     startRace();
 });
 $(document).on("click","#finishRaceButton", function(){
+    //This function is called when the center to point B button is clicked on the course race page
+    //Center map to current point B
     endRace();
 });
 
@@ -129,6 +154,8 @@ function initMap(pos){
 }
 
 function initCalc(pos){
+    //Based off code from https://developers.google.com/maps/documentation/javascript/examples/marker-remove
+    //AND https://developers.google.com/maps/documentation/javascript/examples/directions-travel-modes
     
     directionsDisplay = new google.maps.DirectionsRenderer({
         draggable:true,
@@ -144,11 +171,8 @@ function initCalc(pos){
     directionsService = new google.maps.DirectionsService;
     
     route ={
-          origin: {lat: pos.lat,lng: pos.lng-0.003},  // Haight.
-          destination: {lat: pos.lat,lng: pos.lng+0.003},  // Ocean Beach.
-          // Note that Javascript allows us to access the constant
-          // using square brackets and a string value as its
-          // "property."
+          origin: {lat: pos.lat,lng: pos.lng-0.003},
+          destination: {lat: pos.lat,lng: pos.lng+0.003}, 
           travelMode: google.maps.TravelMode['WALKING']
     };
     
@@ -230,20 +254,7 @@ function getGeo(){
     return geo;
 }
 
-function resetEditor(){
-    //loading=true;
-    console.log("reload editor");
-    
-    directionsDisplay.set('directions',null);
-    raceDisplay.set('directions',null);
-    
-    deleteMarkers();
-    
-}
-
 function track(position){
-    //console.log("tracking");
-    
     var pos=convertPosition(position);
     var range=0.002;
     //IF RACE HAS STARTED

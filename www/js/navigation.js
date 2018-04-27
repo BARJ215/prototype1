@@ -1,3 +1,6 @@
+//The purpose of this JavaScript is to implement the gesture navigation using JQuery mobile.
+//Based off code from https://api.jquerymobile.com/1.3/jQuery.mobile.changePage/
+
 $(document).on("swipeleft","#main", function(){
     console.log("swipe");
     $.mobile.changePage($("#courseSelect"), { transition: "slideright", changeHash:true});
