@@ -29,6 +29,7 @@
         </array>
     </config-file>
     
+    <!--The following is based off code from http://docs.phonegap.com/phonegap-build/configuring/icons-and-splash/ -->
     <icon src="img/icon.png" />
     
 </widget>
