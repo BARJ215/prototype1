@@ -8,3 +8,10 @@ How to install
 2. Open the APK file and follow its instructions.
 3. Open up the Time to Go app.
 
+Pre-made Usernames and Passwords
+=======================
+The following is a usernames and password for an account already set up with the app.
+You may use these for marking or create your own.
+
+Username: dave@email.com
+Password: password
