@@ -88,13 +88,11 @@ $(document).on("click","#raceCenterYou", function(){
     centerRaceMap(currentPos);
 });
 $(document).on("click","#startRaceButton", function(){
-    //This function is called when the center to point A button is clicked on the course race page
-    //Center map to point A
+    //This funciton is only used when the d
     startRace();
 });
 $(document).on("click","#finishRaceButton", function(){
-    //This function is called when the center to point B button is clicked on the course race page
-    //Center map to current point B
+ 
     endRace();
 });
 
