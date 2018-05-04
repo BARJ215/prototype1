@@ -234,17 +234,16 @@ function failPosition(error) {
 
 
 function calcRoute(directionsService, directionsDisplay, route) {
-        //Attempt to calculate route
-        console.log("calculating route");
-        directionsService.route(route, function(response, status) {
-          if (status == 'OK') {
-            //If succesful, display route
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-        
+    //Attempt to calculate route
+    console.log("calculating route");
+    directionsService.route(route, function(response, status) {
+      if (status == 'OK') {
+        //If succesful, display route
+        directionsDisplay.setDirections(response);
+      } else {
+        window.alert('Directions request failed due to ' + status);
+      }
+    });
 }
 
 function getGeo(){
@@ -283,9 +282,6 @@ function track(position){
     if(pos.lat!=oldPos.lat&&pos.lng!=oldPos.lng){
         deleteMarkers();
         addRaceMarker(pos);
-        console.log("Position - Lat: "+ pos.lat+ " Lng: "+pos.lng);
-        console.log("Euclidean Distance to Origin - Lat:"+(route.origin.lat-pos.lat)+" Lng: "+(route.origin.lng-pos.lng));
-        console.log("Destination -  Lat: "+route.destination.lat+" Lng: "+route.destination.lng);
         oldPos=pos;
     }
 

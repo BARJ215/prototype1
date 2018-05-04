@@ -39,18 +39,7 @@ function upload(geo){
         origin: geo[0].place_id,
         destination: geo[geo.length-1].place_id
     };
-    //If the map contains additional waypoints...
-    if(geo.length>2){
-        //Save optional waypoints as single string
-        var waypoints =geo[1].place_id;
-        for(i=2;i<geo.length-1;i++){
-            //If does not exceed the limit
-            if(waypoints.length+geo[i].place_id.length+1<=500){
-               waypoints= String(waypoints+","+geo[i].place_id); 
-            }
-        }
-        newCourse.waypoints=waypoints;
-    }
+
     //Upload new course to Backendless database
     Backendless.Data.of("courses").save(newCourse).then(saved).catch(error);
 }
