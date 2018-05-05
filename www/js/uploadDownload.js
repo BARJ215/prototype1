@@ -8,7 +8,6 @@ var raceCourse;
 var estimate;
 
 $(document).on("click","#uploadButton",saveMap);
-$(document).on("click","#selectButton",selectCourse);
 $(document).on('pageshow','#courseSelect',loadCourses);
 $(document).on("click","#raceCenterA", function(){
     //Center the map based using place ID
@@ -86,13 +85,6 @@ function processResults(courses){
     $('#courseList').trigger("create");
 }
 
-function selectCourse(){
-    console.log("selecting course");
-    //Get the ID for the selected course
-    var id = getSelection();
-    //Find the corresponding course by that ID
-    Backendless.Data.of("courses").findById(id).then(loadRace).catch(error);
-}
 
 function loadRace(course){
     //Create new race course
@@ -102,8 +94,6 @@ function loadRace(course){
         //The feature to change the travel mode should be added in the future
         travelMode: google.maps.TravelMode['WALKING']
     };
-    //Update current position by initialising the maps.
-    navigator.geolocation.getCurrentPosition(init, failPosition);
     //Calculate route of the new race course.
     calcRoute(directionsService, raceDisplay, raceCourse);
     //This uses the Google Maps API distance matrix service to calculate the estimated time to complete the race
@@ -117,7 +107,8 @@ function loadRace(course){
             estimate=serv.rows[0].elements[0].duration.value;
             console.log(estimate);
         }
-    )
+    );
+
 }
 
 function placeReformat(id){

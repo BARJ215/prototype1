@@ -19,10 +19,10 @@ var currentPos;
 var currentTime;
 var reward;
 var redeemed=true;
+var sc=false;
 
 $(document).on("pageshow","#courseSelect", function(){
     //Initialise maps
-    navigator.geolocation.getCurrentPosition(init, failPosition);
 });
 
 $(document).on("pageshow","#mapEditor", function() {
@@ -32,38 +32,15 @@ $(document).on("pageshow","#mapEditor", function() {
     
 });
 
-$(document).on("pageshow","#race", function(){
-    //Initialise race map
-    navigator.geolocation.getCurrentPosition(init, failPosition);
-    //Start tracker
-    
-    
-    if(loading==true){
-        //If map and course is loaded
-        //Set inital map position
-        oldPos={
-            lat:0,
-            lng:0
-        }
-        
-        //Set the tracker to have high accuracy
-        //The following is based off code from https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
-        var locationOptions = {
-            enableHighAccuracy:true
-        };
-        trackID=navigator.geolocation.watchPosition(track,failPosition,locationOptions);
-    }
-    //Center the race map based on current position
-    centerRaceMap(currentPos);
-});
-
 $(document).on("pagehide","#race", function(){
     //This function is classed when the race page is hidden
-    //Stop racing
-    racing=false;
-    //Stop tracker
-    //The following is using code based on https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/clearWatch
-    navigator.geolocation.clearWatch(trackID);
+    if(racing==true){
+        //Stop racing
+        racing=false;
+        //Stop tracker
+        //The following is using code based on https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/clearWatch
+        navigator.geolocation.clearWatch(trackID);
+    }
     console.log("stopped tracking");
 });
 
@@ -95,7 +72,7 @@ $(document).on("click","#finishRaceButton", function(){
  
     endRace();
 });
-
+$(document).on("click","#selectButton",selectCourse);
 
 
 function init(position){
@@ -117,7 +94,28 @@ function init(position){
         calcRoute(directionsService, directionsDisplay, route);
         newRoute=false;
     }
-    
+    if(sc==true){
+        console.log("selecting course");
+        //Get the ID for the selected course
+        var id = getSelection();
+        //Find the corresponding course by that ID
+        Backendless.Data.of("courses").findById(id).then(loadRace).catch(error);
+        //Set inital map position
+        oldPos={
+            lat:0,
+            lng:0
+        }
+        
+        //Set the tracker to have high accuracy
+        //The following is based off code from https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition
+        var locationOptions = {
+            enableHighAccuracy:true
+        };
+        trackID=navigator.geolocation.watchPosition(track,failPosition,locationOptions);
+        //Center the race map based on current position
+        centerRaceMap(currentPos);
+        sc=false;
+    }
     centerMap(currentPos);
 
 }
@@ -176,6 +174,12 @@ function initCalc(pos){
     
     console.log(directionsService);
 }
+
+function selectCourse(){
+    sc=true;
+    navigator.geolocation.getCurrentPosition(init, failPosition);
+}
+
 
 function addMarker(location){
     //Based off code from https://developers.google.com/maps/documentation/javascript/examples/marker-remove
