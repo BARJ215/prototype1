@@ -27,7 +27,13 @@ var user;
 function accountInit(){
     //This function is called when the main page is shown. This function checkes whether the user is currently logged in.
     //Based off code from https://backendless.com/documentation/users/js/users_get_current_user.htm
-    Backendless.UserService.getCurrentUser().then(checkUser).catch(error);
+    Backendless.UserService.getCurrentUser().then(checkUser).catch(function(err){
+        console.log("Error: "+err);
+         $('#accountDiv').empty();
+        $('#
+          ').append("<h3 style='text-align: center; margin: 0px;'>Connect to the internet to access your profile.</h3>");
+        $('#accountDiv').trigger("create");
+    });
     
 }
 function accountInitP(){
@@ -233,7 +239,12 @@ function loadLeaderboard(){
     //This sets each page to contain 10 users - only 1 page is loaded
     queryBuilder.setPageSize(10);
     //Get Users and their corresponding points
-    Backendless.Data.of("users").find(queryBuilder).then(processLeaderboard).catch(error); 
+    Backendless.Data.of("users").find(queryBuilder).then(processLeaderboard).catch(function(err){
+        console.log("Error: "+err);
+        $('#lb').empty();
+        $('#lb').append("<h3 style='text-align: center; margin: 0px;'>Connect to the internet to access the leaderboard.</h3>");
+        $('#lb').trigger("create");
+    });
 }
 
 function processLeaderboard(users){

@@ -63,7 +63,12 @@ function loadCourses(){
     //The following increases the amount of Courses that can be loaded to 50 per page - only one page is loaded
     queryBuilder.setPageSize(50);
     //Get course data
-    Backendless.Data.of("courses").find(queryBuilder).then(processResults).catch(error);   
+    Backendless.Data.of("courses").find(queryBuilder).then(processResults).catch(function(err){
+        console.log(err);
+        $('#courseList').empty();
+        $('#courseList').append("<legend>Connect to the internet to access the recent courses</legend>");
+        $('#courseList').trigger("create");        
+    });   
 }
 
 function processResults(courses){
