@@ -29,9 +29,8 @@ function accountInit(){
     //Based off code from https://backendless.com/documentation/users/js/users_get_current_user.htm
     Backendless.UserService.getCurrentUser().then(checkUser).catch(function(err){
         console.log("Error: "+err);
-         $('#accountDiv').empty();
-        $('#
-          ').append("<h3 style='text-align: center; margin: 0px;'>Connect to the internet to access your profile.</h3>");
+        $('#accountDiv').empty();
+        $('#accountDiv').append("<h3 style='text-align: center; margin: 0px;'>Connect to the internet to access your profile.</h3>");
         $('#accountDiv').trigger("create");
     });
     
