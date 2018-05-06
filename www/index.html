@@ -19,6 +19,7 @@
 </head>
 
 <body>
+<!--MAIN PAGE-->
 <div data-role="page" id="main">
     <div data-role="header" data-theme="b" data-position="fixed">
         <h1><img src="img/ttg_inv.png" height="20"  /></h1>
@@ -66,7 +67,7 @@
 
     </div>
 </div>
-    
+<!--COURSE SELECTION PAGE-->    
 <div data-role="page" id="courseSelect">
 
     <div data-role="header" data-theme="b" data-position="fixed" >
@@ -99,6 +100,7 @@
     
 </div>
 
+<!--MAP EDITOR PAGE-->
 <div data-role="page" id="mapEditor">
     <div id="mapPanel" data-role="panel" data-display="overlay" data-position="right" >
         <h2>Center</h2>
@@ -129,14 +131,12 @@
     
 </div>
     
-
+<!--RACE PAGE-->
 <div data-role="page" id="race">   
     <div data-role="header" data-theme="b" data-position="fixed" >
         <a href='#courseSelect' data-icon="arrow-l" id="backButton">Courses</a>
         <h1><img src="img/ttg_inv.png" height="20"  /></h1>
     </div>
-
-
     <div data-role="main" id="map-content">
         <div id="raceMap"></div>
     </div>
@@ -154,9 +154,9 @@
         -->
     </div>
 </div>
-    
-<div data-role="page" id="leaderboard">
 
+<!--LEADERBOARD PAGE-->    
+<div data-role="page" id="leaderboard">
     <div data-role="header" data-theme="b" data-position="fixed" >
         <h1><img src="img/ttg_inv.png" height="20"  /></h1>
     </div> 
@@ -181,7 +181,8 @@
     
     </div>    
 </div>
-
+    
+<!--RACE FINISH PAGE-->
 <div data-role="page" id="finishDialog" data-close-btn="none">
     <div data-role="header" data-theme="b">
         <h1>Congratulations</h1>
